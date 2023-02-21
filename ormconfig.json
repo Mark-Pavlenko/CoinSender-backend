@@ -1,0 +1,19 @@
+{
+  "type": "postgres",
+  "host": "172.17.0.1",
+  "port": 35000,
+  "username": "postgres",
+  "password": "dhaponov",
+  "database": "payroll",
+  "entities": [
+    "dist/**/*.entity{.js,.js}"
+  ],
+  "migrationsTableName": "migration",
+  "migrations": [
+    "/Users/ivanberko/Documents/Payroll-BE/src/config/src/migration/**/*.{ts,js}"
+  ],
+  "cli": {
+    "migrationsDir": "src/migration"
+  },
+  "synchronize": true
+}

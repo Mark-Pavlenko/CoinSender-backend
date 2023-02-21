@@ -1,0 +1,13 @@
+[Unit]
+Description=Coinsender Payroll Web Application
+
+[Service]
+WorkingDirectory=/home/ubuntu/app/Payroll-BE
+ExecStart=npm run start:dev
+Restart=always
+RestartSec=10
+SyslogIdentifier=Coinsender-Payroll-BE
+User=ubuntu
+
+[Install]
+WantedBy=multi-user.target

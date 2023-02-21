@@ -1,0 +1,51 @@
+version: "3.7"
+services:
+    db:
+        container_name: postgresql-14
+        image: postgres:14
+        restart: always
+        volumes:
+            - ./postgres/data:/var/lib/postgresql/data
+            - ./src/scripts/init_db.sh:/docker-entrypoint-initdb.d/init_db.sh
+        env_file:
+            - .env
+        ports:
+            - 35000:5432
+        networks:
+            - payroll
+
+    redis:
+        container_name: redis
+        image: redis
+        restart: always
+        env_file:
+            - .env
+        ports:
+            - 6379:6379
+        networks:
+            - payroll
+
+    backend:
+        container_name: payroll-be
+        build:
+            context: .
+            dockerfile: Dockerfile
+        image: payroll-be:local
+        restart: always
+        depends_on:
+            - db
+            - redis
+        links:
+            - db
+        env_file:
+            - .env
+        ports:
+            - 3000:3000
+        networks:
+            - payroll
+#        command: sh -c "sleep 5s && npm run typeorm:run-migrations && npm run start"
+
+networks:
+  payroll:
+    name: payroll
+    driver: bridge

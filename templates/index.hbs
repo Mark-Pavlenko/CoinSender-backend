@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <title>Invoice</title>
+    <style>
+        *,
+        *::after,
+        *::before {
+            padding: 0;
+            margin: 0;
+            border: 0;
+            box-sizing: border-box;
+        }
+        html, body {
+            height: 100%;
+        }
+        .wrapper {
+            min-height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+        main {
+            flex: 1 1 auto;
+            padding-top: 109px;
+            padding-left: 100px;
+            padding-right: 30px;
+        }
+        .title {
+            display: inline;
+            text-align: left;
+            font-family: 'Roboto';
+            font-style: normal;
+            font-weight: 400;
+            font-size: 26px;
+            border-bottom: 1px solid #FFA31A; }
+        .info { font-family: 'Roboto';
+                font-style: normal;
+                font-weight: 500;
+                font-size: 16px;
+                line-height: 22px;
+                color: #808080 }
+        .info-text { font-weight: 300 }
+        .emails_wrapper {
+            width: auto;
+            display: flex;
+            align-items: center;
+            margin-top: 80px;
+            margin-bottom: 50px;
+            gap: 50px;
+        }
+        .emails {
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+        }
+        .email--title {
+            font-family: 'Roboto';
+            font-style: normal;
+            font-weight: 500;
+            font-size: 27.228px;
+            line-height: 27px;
+            color: #000000;
+            margin-bottom: 10px;
+        }
+        .email--company {
+            font-family: 'Roboto';
+            font-style: normal;
+            font-weight: 500;
+            font-size: 18.152px;
+            line-height: 25px;
+            color: #000000;
+        }
+        .email {
+            font-family: 'Roboto';
+            font-style: normal;
+            font-size: 18.152px;
+            line-height: 25px;
+            color: #000000;
+            font-weight: 300;
+        }
+        .info_invoices {
+           width: 100%;
+           display: flex;
+           flex-direction: column;
+           margin-bottom: 50px;
+        }
+        .info_payment {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: space-between;
+            width: 100%;
+            gap: 5px;
+            margin-bottom: 20px;
+        }
+        .info_invoice{
+            width: 100%;
+        }
+        .info_invoice table{
+            width: 100%;
+        }
+        .info--title {
+            font-family: 'Roboto';
+            font-style: normal;
+            font-weight: 700;
+            font-size: 21.7815px;
+            text-align: center;
+            text-transform: uppercase;
+            color: #FFA31A;
+            width: 100%;
+        }
+        .info--wallet-title {
+            font-family: 'Roboto';
+            font-style: normal;
+            font-weight: 500;
+            font-size: 18.152px;
+            line-height: 25px;
+            color: #999999;
+        }
+        .info--wallet {
+            font-family: 'Roboto';
+            font-style: normal;
+            font-weight: 300;
+            font-size: 18.152px;
+            color: #b3adad;
+        }
+        .info--wallet-wrapper {
+            display: flex;
+            flex-direction: column;
+            gap: 1px;
+        }
+        footer{
+            height: 226px;
+            background: #F9F9FA;
+            padding-top: 44px;
+            padding-left: 100px;
+        }
+
+        .footer_title {
+            font-family: 'Roboto';
+            font-style: normal;
+            font-weight: 400;
+            font-size: 27.2269px;
+            line-height: 27px;
+            color: #000000;
+        }
+        .footer_info {
+            display: flex;
+            gap: 400px;
+        }
+        .footer_info--wrapper {
+            display: flex;
+            flex-direction: column;
+        }
+        .footer_info--item {
+            font-family: 'Roboto';
+            font-style: normal;
+            font-weight: 400;
+            font-size: 18.152px;
+            line-height: 25px;
+            color: #999999;
+        }
+        .total_info {
+            margin-top: 50px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: flex-end;
+            width: 100%;
+            height: 120px;
+            background: #F9F9FA;
+            border: 1px solid #DFE4EA;
+            border-radius: 20px;
+            padding-right: 100px;
+        }
+        .total_info--item {
+            width: 500px;
+            display: flex;
+            justify-content: space-between;
+
+            font-family: 'Roboto';
+            font-style: normal;
+            font-weight: 300;
+            font-size: 18px;
+            line-height: 24px;
+            color: #000000;
+        }
+        .total_info--item.total-title {
+            font-weight: 700;
+        }
+        .payment__info_wrapper {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="wrapper">
+
+        <main>
+            <div class="title">
+                INVOICE | {{company_name_client}}
+            </div>
+            <div class="info">
+                No. <span class="info-text">{{invoice_number}}</span> | Date <span class="info-text">{{created_date}}</span> | Due Date <span class="info-text">{{due_date}}</span>
+            </div>
+            <div class="emails_wrapper">
+                <div class="emails">
+                    <div class="email--title">
+                        From
+                    </div>
+                    <div class="email--company">
+                        {{company_name}}
+                    </div>
+                    <div class="email">
+                        {{email}}
+                    </div>
+                </div>
+                <div class="emails">
+                    <div class="email--title">
+                        To
+                    </div>
+                    <div class="email--company">
+                        {{company_name_client}}
+                    </div>
+                    <div class="email">
+                        {{email_client}}
+                    </div>
+                </div>
+            </div>
+            <div class="info_invoices">
+                <div class="info--title">
+                        Payment INFO
+                </div>
+                <div class="info_payment">
+                    <div class="payment__info_wrapper">
+                        <div class="info--wallet-wrapper">
+                            <div class="info--wallet-title">
+                                Network:
+                            </div>
+                            <div class="info--wallet">
+                                {{blockchain}} ({{amount_currency}})
+                            </div>
+                        </div>
+                        <div class="info--wallet-wrapper">
+                            <div class="info--wallet-title">
+                                Wallet Address:
+                            </div>
+                            <div class="info--wallet">
+                                {{wallet_client}}
+                            </div>
+                        </div>
+                    </div>
+                    {{#if qr_image}}
+                        <div><img src="{{qr_image}}"/></div>
+                    {{/if}}
+                </div>
+                <div class="info_invoice">
+                    <table class="table table-bordered">
+                        <tr>
+                            <th scope="col">Description</th>
+                            <th scope="col">Quantity</th>
+                            <th scope="col">Price</th>
+                            <th scope="col">Discount</th>
+                            <th scope="col">TAX</th>
+                            <th scope="col">Amount</th>
+                        </tr>
+                        {{#each invoice_items as | items |}}
+                        <tr>
+                            <td scope="row">{{items.description}}</td>
+                            <td>{{items.qty}} {{items.qty_type}}</td>
+                            <td>{{items.unit_price}}</td>
+                            <td>{{items.discount}}%</td>
+                            <td>{{items.tax}}%</td>
+                            <td>{{items.amount}}</td>
+                         </tr>
+                        {{/each}}
+                    </table>
+                 </div>
+            </div>
+            <div class="total_info">
+                <div class="total_info--item total-title">
+                    <div>
+                        Amount without TAX
+                    </div>
+                    <span>
+                        {{amount_with_tax}} {{amount_currency}}
+                    </span>
+                </div>
+                <div class="total_info--item">
+                    <div>
+                        Total TAX amount
+                    </div>
+                    <span>
+                        {{amount_total_tax}} {{amount_currency}}
+
+                    </span>
+                </div>
+                <div class="total_info--item">
+                    <div>
+                        Total amount
+                    </div>
+                    <span>
+                       {{amount_total}} {{amount_currency}}
+                    </span>
+                </div>
+            </div>
+            <div>
+                <div>
+                    Note
+                </div>
+                <span>
+                    {{description}}
+                </span>
+            </div>
+        </main>
+       <footer>
+           <div class="footer_title">
+                Thank you for your business!
+            </div>
+           <div class="footer_info">
+                <div class="footer_info--wrapper">
+                    <div class="footer_info--item">
+                    {{company_name}} | {{phone}}
+                    </div>
+               </div>
+
+               <div class="footer_info--wrapper" style="display:{{optional}}">
+                    <div class="footer_info--item">
+                         Address
+                    </div>
+                    <div class="footer_info--item">
+                        City | Country
+                    </div>
+                    <div class="footer_info--item">
+                        Postal Code
+                    </div>
+               </div>
+           </div>
+       </footer>
+    </div>
+</body>
+</html>
